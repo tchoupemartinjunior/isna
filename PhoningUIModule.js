@@ -30,7 +30,7 @@ const PhoningUIModule = (function () {
     function showSuccessMessage(message) {
         try {
             const ui = SpreadsheetApp.getUi();
-            ui.alert('Success', message, ui.ButtonSet.OK);
+            ui.alert('Succès', message, ui.ButtonSet.OK);
         } catch (error) {
             Logger.log(`Error showing success: ${error.message}`);
         }

@@ -17,10 +17,10 @@ function genererLiensWhatsAppNormaux() {
     mettreAJourListesCompteRenduPhoning();
 
     Logger.log('WhatsApp links generated successfully');
-    PhoningUIModule.showSuccessMessage('WhatsApp links generated successfully');
+    PhoningUIModule.showSuccessMessage('Messages WhatsApp générés avec succès');
   } catch (error) {
     Logger.log(`Error generating WhatsApp links: ${error.message}`);
-    PhoningUIModule.showErrorDialog('Error', error.message);
+    PhoningUIModule.showErrorDialog('Erreur', error.message);
   }
 }
 
@@ -36,7 +36,7 @@ function genererLiensWhatsAppRappels() {
     Logger.log('WhatsApp reminders generated successfully');
   } catch (error) {
     Logger.log(`Error generating WhatsApp reminders: ${error.message}`);
-    PhoningUIModule.showErrorDialog('Error', error.message);
+    PhoningUIModule.showErrorDialog('Erreur', error.message);
   }
 }
 
@@ -50,9 +50,9 @@ function envoyerDispatchingParMail() {
     mettreAJourListesCompteRenduPhoning();
 
     Logger.log('Dispatching emails sent successfully');
-    PhoningUIModule.showSuccessMessage('Dispatching emails sent successfully');
+    PhoningUIModule.showSuccessMessage('Emails de dispatching envoyés avec succès');
   } catch (error) {
     Logger.log(`Error sending dispatching emails: ${error.message}`);
-    PhoningUIModule.showErrorDialog('Error', error.message);
+    PhoningUIModule.showErrorDialog('Erreur', error.message);
   }
 }
