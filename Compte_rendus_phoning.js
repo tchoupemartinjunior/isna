@@ -8,7 +8,7 @@ function mettreAJourListesCompteRenduPhoning() {
   const form = FormApp.openById(formConfig.ID);
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 
-  const personnesAContacter = FormsDataService.getPersonnesAContacter(spreadsheet);
+  const personnesAContacter = FormsDataService.getPersonnesByStatut(spreadsheet, ConfigService.getStatut().A_CONTACTER);
   const staffPhoning = FormsDataService.getStaffPhoning(spreadsheet);
 
   FormsDataService.mettreAJourQuestionsListe(form, {

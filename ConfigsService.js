@@ -6,7 +6,8 @@ const ConfigService = (function () {
     },
 
     STATUT: {
-      A_CONTACTER: 'A contacter'
+      A_CONTACTER: 'A contacter',
+      EN_COURS: 'En Cours',
     },
 
     FORMS: {

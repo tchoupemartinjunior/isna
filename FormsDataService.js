@@ -8,18 +8,18 @@
 
 const FormsDataService = {
     /**
-     * Récupère la liste des personnes à contacter (sans doublon, triée)
+     * Récupère la liste des personnes en fonction de leur statut (sans doublon, triée)
      * @param {SpreadsheetApp.Spreadsheet} spreadsheet
+     * @param {string} statut - Le statut à filtrer (ex: 'A contacter', 'En Cours')
      * @returns {string[]}
      */
-    getPersonnesAContacter(spreadsheet) {
+    getPersonnesByStatut(spreadsheet, statut) {
         const config = ConfigService.getSheet('PHONING');
         const sheet = spreadsheet.getSheetByName(config.NAME);
         const rows = sheet.getRange(config.RANGE_FOR_FORMS).getValues();
-        const statut = ConfigService.getStatut().A_CONTACTER;
         const filteredRow = rows
-                .filter(row => row[config.INDEX_FOR_FORMS.STATUT] === statut)
-                .map(row => row[config.INDEX_FOR_FORMS.PERSONNE]);
+            .filter(row => row[config.INDEX_FOR_FORMS.STATUT] === statut)
+            .map(row => row[config.INDEX_FOR_FORMS.PERSONNE]);
 
         return this.getUniqueSortedValues(filteredRow);
     },
