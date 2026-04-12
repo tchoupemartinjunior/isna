@@ -9,7 +9,7 @@ function mettreAJourListesDuSuivi() {
   const form = FormApp.openById(formId);
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 
-  const personnesASuivre = FormsDataService.getPersonnesByStatut(spreadsheet, ConfigService.getStatut().EN_COURS);
+  const personnesASuivre = FormsDataService.getPersonnesByStatut(spreadsheet, ConfigService.getStatut().EN_COURS, 'STATUT_INTEGRATION');
   const staffPhoning = FormsDataService.getStaffPhoning(spreadsheet);
 
   FormsDataService.mettreAJourQuestionsListe(form, {

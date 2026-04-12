@@ -34,7 +34,8 @@ const ConfigService = (function () {
 
         INDEX_FOR_FORMS: {
           PERSONNE: 0,
-          STATUT: 5
+          STATUT_PHONING: 5,
+          STATUT_INTEGRATION: 4
         },
 
         COLONNES: {
