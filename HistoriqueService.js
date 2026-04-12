@@ -1,9 +1,4 @@
-/**
- * Service pour gérer l'historique des phoning
- */
 const HistoriqueService = (() => {
-
-  // ===== CONFIGURATION =====
   const CONFIG = {
     SHEET_NAME: 'Compte_rendu_Phoning',
     NB_COLUMNS: 9,
@@ -20,7 +15,6 @@ const HistoriqueService = (() => {
     }
   };
 
-  // ===== PUBLIC =====
   return {
 
     /**
@@ -43,27 +37,23 @@ const HistoriqueService = (() => {
 
 
     // Vérifie si la personne a été contactée par le bon staff dans les 7 derniers jours
-      aEteContacteRecemment(historique, staffNom, nbJoursPrecedents=7) {
-        const maintenant = new Date();
+    aEteContacteRecemment(historique, staffNom, nbJoursPrecedents = 7) {
+      const maintenant = new Date();
 
-        for (let histo of historique) {
-          const dateContact = new Date(histo.date);
-          const diffJours = (maintenant - dateContact) / (1000 * 60 * 60 * 24);
+      for (let histo of historique) {
+        const dateContact = new Date(histo.date);
+        const diffJours = (maintenant - dateContact) / (1000 * 60 * 60 * 24);
 
-          if (diffJours <= nbJoursPrecedents && StringNormalizer.normalizeName(histo.personneQuiAppelait) === staffNom) {
-            return true;
-          }
+        if (diffJours <= nbJoursPrecedents && StringNormalizer.normalizeName(histo.personneQuiAppelait) === staffNom) {
+          return true;
         }
-        return false;
       }
+      return false;
+    }
 
   };
 
-  // ===== PRIVÉ =====
 
-  /**
-   * Transforme une ligne brute en objet Historique exploitable
-   */
   function mapToHistoriqueDTO(row) {
     const C = CONFIG.COLUMNS_INDEX;
     return {

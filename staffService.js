@@ -1,9 +1,4 @@
-/***********************************
- * 📌 StaffService
- * Gestion centralisée du personnel phoning
- ***********************************/
 const StaffService = (() => {
-
   const CONFIG = {
     SHEET_NAME: 'Staff_phoning',
     RANGE: 'A2:E',

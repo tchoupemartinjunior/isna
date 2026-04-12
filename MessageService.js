@@ -1,10 +1,6 @@
-/**
- * Service pour gérer la génération des messages WhatsApp
- */
 const MessageService = (() => {
   const nl = '\n';
 
-  // ===== PUBLIC =====
   return {
 
     /**
@@ -57,7 +53,7 @@ const MessageService = (() => {
         `Bonjour *${staffPhoning}*${nl}${nl}` +
         `Merci de contacter *${personne}* au ${telephone}${nl}${nl}` +
         `Voici quelques informations utiles sur ${prenom} :${nl}${nl}` +
-        `Souhaite intégrer l'église : *${integrerEglise}*${nl}`+
+        `Souhaite intégrer l'église : *${integrerEglise}*${nl}` +
         `Quartier : *${quartier}*${nl}` +
         `Tranche d'âge : *${trancheAge}*${nl}` +
         `Sexe : *${sexe}*${nl}` +

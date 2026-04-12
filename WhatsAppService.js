@@ -1,11 +1,3 @@
-/**
- * ============================
- * WhatsAppService
- * ============================
- * Gère la génération des liens WhatsApp
- * Responsabilité unique: Logique WhatsApp
- * ============================
- */
 
 const WhatsAppService = (function () {
     const DAYS_BEFORE_CONTACT_RECENT = 7;
@@ -67,7 +59,6 @@ const WhatsAppService = (function () {
         const staffNom = StringNormalizer.normalizeName(row[colonnes.STAFF_PHONING - 1]);
         const personneNom = row[colonnes.PERSONNE_A_CONTACTER - 1];
 
-        // Vérifie si la personne a été contactée récemment
         const historique = HistoriqueService.getHistorique(personneNom);
         if (HistoriqueService.aEteContacteRecemment(
             historique,
@@ -79,7 +70,6 @@ const WhatsAppService = (function () {
             return;
         }
 
-        // Récupère le téléphone du staff
         const telStaff = staffPhoneMap[staffNom];
         if (!telStaff) {
             sheet.getRange(rowIndex, colonnes.LIEN_WHATSAPP)
@@ -88,7 +78,6 @@ const WhatsAppService = (function () {
             return;
         }
 
-        // Génère et écrit le lien WhatsApp
         const whatsappLink = buildWhatsAppLink(row, telStaff, isRappel);
         const linkText = isRappel ? 'Envoyer RAPPEL WhatsApp' : 'Envoyer Message WhatsApp';
 

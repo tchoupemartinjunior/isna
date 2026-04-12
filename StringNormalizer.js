@@ -1,10 +1,3 @@
-/**
- * ============================
- * StringNormalizer
- * ============================
- * Centralise toutes les normalisations de chaînes
- * Élimine les duplications et assure la cohérence
- */
 
 const StringNormalizer = (function () {
     /**

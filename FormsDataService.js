@@ -1,11 +1,3 @@
-/**
- * ============================
- * FormsDataService
- * ============================
- * Service centralisé pour la gestion des données et mise à jour des formulaires
- * Utilisé par : SuiviDePresence.js et Compte_rendus_phoning.gs.js
- */
-
 const FormsDataService = {
     /**
      * Récupère la liste des personnes en fonction de leur statut (sans doublon, triée)

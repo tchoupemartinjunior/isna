@@ -1,11 +1,3 @@
-/**
- * ============================
- * PhoningEmailService
- * ============================
- * Gère l'envoi des emails de dispatching
- * Responsabilité unique: Logique d'envoi des emails
- * ============================
- */
 
 const PhoningEmailService = (function () {
     const STATUS_A_CONTACTER = 'A contacter';
@@ -38,10 +30,8 @@ const PhoningEmailService = (function () {
                 return;
             }
 
-            // Récupérer la map staff {nom -> {tel, email}}
             const staffMap = StaffService.construireStaffMap();
 
-            // Envoyer les emails
             let successCount = 0;
             for (const staffNom in dispatching) {
                 if (sendEmailToStaff(staffNom, dispatching[staffNom], staffMap)) {
@@ -68,7 +58,6 @@ const PhoningEmailService = (function () {
             const statut = row[colonnes.STATUT_PHONING - 1];
             const personne = row[colonnes.PERSONNE_A_CONTACTER - 1];
 
-            // Filtre: statut A contacter + personne non vide
             if (!StringNormalizer.areEqual(statut, STATUS_A_CONTACTER) || !personne) {
                 continue;
             }

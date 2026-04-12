@@ -1,11 +1,3 @@
-/**
- * ============================
- * SheetRepository
- * ============================
- * Abstraction d'accès aux données
- * Élimine la dépendance directe à SpreadsheetApp
- * Permet le mocking pour les tests
- */
 
 const SheetRepository = (function () {
     const DEFAULT_HEADER_ROW = 1;
