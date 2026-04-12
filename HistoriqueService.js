@@ -32,11 +32,11 @@ const HistoriqueService = (() => {
       if (!nomPersonneContactee) return [];
 
       const data = getSheetDataAsObjects(CONFIG.SHEET_NAME, CONFIG.NB_COLUMNS);
-      const nomNormalise = normaliserChaine(nomPersonneContactee);
+      const nomNormalise = StringNormalizer.normalize(nomPersonneContactee);
 
       return data
         .filter(row =>
-          normaliserChaine(row[CONFIG.COLUMNS_INDEX.PERSONNE_CONTACTEE]) === nomNormalise
+          StringNormalizer.normalize(row[CONFIG.COLUMNS_INDEX.PERSONNE_CONTACTEE]) === nomNormalise
         )
         .map(mapToHistoriqueDTO);
     },
@@ -50,7 +50,7 @@ const HistoriqueService = (() => {
           const dateContact = new Date(histo.date);
           const diffJours = (maintenant - dateContact) / (1000 * 60 * 60 * 24);
 
-          if (diffJours <= nbJoursPrecedents && normaliserNom(histo.personneQuiAppelait) === staffNom) {
+          if (diffJours <= nbJoursPrecedents && StringNormalizer.normalizeName(histo.personneQuiAppelait) === staffNom) {
             return true;
           }
         }
