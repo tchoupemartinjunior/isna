@@ -67,11 +67,4 @@ const HistoriqueService = (() => {
     };
   }
 
-  /**
-   * Normalise une chaîne pour comparaison fiable
-   */
-  function normaliserChaine(value) {
-    return (value || '').toString().trim().toLowerCase();
-  }
-
 })();

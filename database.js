@@ -42,7 +42,7 @@ function transferIntegratedRowstoDB() {
     if (statut === "intégré" && (nom || prenom || tel)) {
       const key = [nom.toLowerCase(), prenom.toLowerCase(), tel.toLowerCase()].join("|");
       if (!targetKeySet.has(key)) {
-        integratedRows.push({row, sourceIndex: i + 1});
+        integratedRows.push({ row, sourceIndex: i + 1 });
         targetKeySet.add(key);
       }
     }
@@ -67,16 +67,3 @@ function transferIntegratedRowstoDB() {
 }
 
 
-
-function testNewcomersService() {
-  const service = new NewcomersService();
-
-  const all = service.getAll();
-  Logger.log(all[0]); // premier objet Newcomer
-
-  const parNom = service.getByNom("Molongo");
-  Logger.log(parNom);
-
-  const parTel = service.getByTelephone("0753068229");
-  Logger.log(parTel);
-}
