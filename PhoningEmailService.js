@@ -8,38 +8,37 @@ const PhoningEmailService = (function () {
      * Envoie le dispatching par email à chaque staff
      * @param {Object} config - Configuration avec ONGLETS, COLONNES
      * @param {SheetRepository} repository - Repository pour accès aux données
+     * @param {Object} [options]
+     * @param {Set<number>} [options.rowIndexes] - ne traiter que ces lignes (n° de ligne Sheets)
+     * @returns {{envoyes:number, sansEmail:string[]}}
      */
-    function sendDispatchingEmails(config, repository) {
+    function sendDispatchingEmails(config, repository, options = {}) {
         if (!config || !repository) {
             throw new Error('Configuration and repository are required');
         }
 
         try {
-            const data = repository.getData(config.ONGLETS.PHONING, 1, config.NUM_COLS || 22);
+            const data = repository.getData(config.ONGLETS.PHONING, 1, config.NUM_COLS);
 
-            if (data.length === 0) {
-                Logger.log('No data found to send dispatching');
-                return;
-            }
+            const result = { envoyes: 0, sansEmail: [] };
+            if (data.length === 0) return result;
 
             // Filtrer et regrouper les données par staff
-            const dispatching = groupDataByStaff(data, config.COLONNES);
-
-            if (Object.keys(dispatching).length === 0) {
-                Logger.log('No valid contacts to dispatch');
-                return;
-            }
+            const dispatching = groupDataByStaff(data, config.COLONNES, options.rowIndexes);
+            if (Object.keys(dispatching).length === 0) return result;
 
             const staffMap = StaffService.construireStaffMap();
 
-            let successCount = 0;
             for (const staffNom in dispatching) {
                 if (sendEmailToStaff(staffNom, dispatching[staffNom], staffMap)) {
-                    successCount++;
+                    result.envoyes++;
+                } else {
+                    result.sansEmail.push(`${staffNom} (${dispatching[staffNom].length} visiteur(s))`);
                 }
             }
 
-            Logger.log(`Dispatching sent to ${successCount} staff members`);
+            Logger.log(`Dispatching sent to ${result.envoyes} staff members`);
+            return result;
         } catch (error) {
             Logger.log(`Error sending dispatching emails: ${error.message}`);
             throw error;
@@ -50,10 +49,12 @@ const PhoningEmailService = (function () {
      * Regroupe les données par staff
      * @private
      */
-    function groupDataByStaff(data, colonnes) {
+    function groupDataByStaff(data, colonnes, rowIndexes) {
         const dispatching = {};
+        const staffPhoneMap = StaffService.construireStaffPhoneMap();
 
         for (let i = 0; i < data.length; i++) {
+            if (rowIndexes && !rowIndexes.has(i + 2)) continue;
             const row = data[i];
             const statut = row[colonnes.STATUT_PHONING - 1];
             const personne = row[colonnes.PERSONNE_A_CONTACTER - 1];
@@ -73,10 +74,16 @@ const PhoningEmailService = (function () {
             const message = decodeURIComponent(MessageService.construireMessage(row));
             const whatsappLink = buildWhatsAppLink(telephone);
 
+            const invitationUrl = row[colonnes.FAMILLE - 1]
+                ? InvitationService.buildInvitationUrl(row, staffPhoneMap)
+                : null;
+
             dispatching[staffNom].push({
                 personne,
                 message,
-                whatsappLink
+                whatsappLink,
+                invitationUrl,
+                famille: row[colonnes.FAMILLE - 1]
             });
         }
 
@@ -123,6 +130,12 @@ const PhoningEmailService = (function () {
         entries.forEach((entry, index) => {
             body += `<b>${index + 1}. ${entry.personne}</b><br>`;
 
+            if (entry.invitationUrl) {
+                body += `<a href="${entry.invitationUrl}" target="_blank" ` +
+                    `style="display:inline-block;margin:6px 0;padding:8px 14px;background:#25D366;color:#fff;` +
+                    `border-radius:6px;text-decoration:none;font-weight:bold">` +
+                    `Envoyer l'invitation FI ${entry.famille} sur WhatsApp</a><br>`;
+            }
             if (entry.whatsappLink) {
                 body += `${entry.whatsappLink}<br>`;
             }
@@ -152,7 +165,7 @@ const PhoningEmailService = (function () {
             return '';
         }
 
-        const normalizedPhone = WhatsAppService.normalizePhoneNumber(telephone);
+        const normalizedPhone = PhoneUtils.toWhatsApp(telephone);
         return `<a href="https://wa.me/${normalizedPhone}" target="_blank">Contacter la personne sur WhatsApp</a>`;
     }
 

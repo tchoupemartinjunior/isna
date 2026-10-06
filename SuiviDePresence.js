@@ -18,4 +18,10 @@ function mettreAJourListesDuSuivi() {
   });
 }
 
-
+/**
+ * NOTES : Les fonctions suivantes sont centralisees dans FormsDataService.js
+ * - getPersonnesAContacter(spreadsheet)
+ * - getStaffPhoning(spreadsheet)
+ * - mettreAJourQuestionsListe(form, questionChoicesMap)
+ * - getUniqueSortedValues(values)
+ */

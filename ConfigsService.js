@@ -59,13 +59,26 @@ const ConfigService = (function () {
           PRIERE_SALUT: 18,
           FREQUENTE_EGLISE: 19,
           ANCIENNE_EGLISE: 20,
-          INTEGRER_EGLISE: 22
+          EMAIL: 21,
+          INTEGRER_EGLISE: 22,
+          FAMILLE: 23,
+          INVITATION_WHATSAPP: 24
         }
       },
 
       STAFF_PHONING: {
         NAME: 'Staff_phoning',
         RANGE: 'D2:D'
+      },
+
+      FI_ET_FIJ: {
+        NAME: 'FI_et_FIJ',
+        COLONNES: {
+          FAMILLE: 1,
+          ADRESSE: 2,
+          PILOTE: 3,
+          TYPE: 4
+        }
       }
     }
   };

@@ -43,9 +43,7 @@ const MessageService = (() => {
       const ancienneEglise = row[COLONNES.ANCIENNE_EGLISE - 1] || '';
       const integrerEglise = row[COLONNES.INTEGRER_EGLISE - 1] || '';
 
-      const dateVisite = row[COLONNES.DATE_PREMIERE_VISITE - 1]
-        ? Utilities.formatDate(new Date(row[COLONNES.DATE_PREMIERE_VISITE - 1]), Session.getScriptTimeZone(), 'dd/MM/yyyy')
-        : '';
+      const dateVisite = DateUtils.format(row[COLONNES.DATE_PREMIERE_VISITE - 1]);
 
       let message =
         `Merci de contacter *${personne}*${nl}${nl}` +
@@ -89,23 +87,13 @@ const MessageService = (() => {
         `====================${nl}${nl}`;
 
       historique.forEach(h => {
-        const date = h.date
-          ? Utilities.formatDate(new Date(h.date), Session.getScriptTimeZone(), 'dd/MM/yyyy')
-          : '-';
-        const heure = h.heure || '';
-        const appelant = h.personneQuiAppelait || '-';
-        const abouti = h.echangeAbouti || '-';
-        const reaction = h.reaction || '-';
-        const canal = h.canal || '-';
-        const commentaire = h.commentaire || '-';
-
         histoMsg +=
-          `Date : ${date} ${heure}${nl}` +
-          `Appelant : ${appelant}${nl}` +
-          `Canal : ${canal}${nl}` +
-          `Echange abouti : ${abouti}${nl}` +
-          `Reaction : ${reaction}${nl}` +
-          `Commentaire : ${commentaire}${nl}${nl}`;
+          `Date : ${h.date ? DateUtils.format(h.date) : '-'} ${h.heure || ''}${nl}` +
+          `Appelant : ${h.personneQuiAppelait || '-'}${nl}` +
+          `Canal : ${h.canal || '-'}${nl}` +
+          `Echange abouti : ${h.echangeAbouti || '-'}${nl}` +
+          `Reaction : ${h.reaction || '-'}${nl}` +
+          `Commentaire : ${h.commentaire || '-'}${nl}${nl}`;
       });
 
       return histoMsg;

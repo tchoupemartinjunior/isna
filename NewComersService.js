@@ -47,19 +47,19 @@ class NewcomersService {
   /** =========================
    * Filtrer par colonne (index uniquement)
    ========================= */
-  _filterByColumn(index, value) {
-    return this.data
-      .filter(row => {
-        const cell = row[index];
-        // si c'est une string, trim, sinon comparer directement
-        return (typeof cell === "string" ? cell.trim() : cell) === value;
-      })
-      .map(row => new Newcomer(
-        row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7],
-        row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15],
-        row[16], row[17], row[18], row[19], row[20], row[21], row[22]
-      ));
-  }
+_filterByColumn(index, value) {
+  return this.data
+    .filter(row => {
+      const cell = row[index];
+      // si c'est une string, trim, sinon comparer directement
+      return (typeof cell === "string" ? cell.trim() : cell) === value;
+    })
+    .map(row => new Newcomer(
+      row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7],
+      row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15],
+      row[16], row[17], row[18], row[19], row[20], row[21], row[22]
+    ));
+}
 
   /** =========================
    * Getters simples par index
@@ -91,7 +91,8 @@ class NewcomersService {
   search(criteria = {}) {
     return this.getAll().filter(row =>
       Object.keys(criteria).every((key) => {
-        return row[key] === criteria[key];
+        const index = this.headers.indexOf(key);
+        return index !== -1 && row[Object.keys(row).indexOf(key)] === criteria[key];
       })
     );
   }
